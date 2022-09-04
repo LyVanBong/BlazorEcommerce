@@ -1,6 +1,3 @@
-using BlazorEcommerce.Shared;
-using Microsoft.AspNetCore.Mvc;
-
 namespace BlazorEcommerce.Server.Controllers
 {
     [ApiController]
