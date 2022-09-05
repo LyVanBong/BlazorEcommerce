@@ -1,0 +1,41 @@
+﻿@page "/product/{id:int}"
+@inject IProductService _productService
+
+<h3>ProductDetails</h3>
+
+@if (_product == null)
+{
+    <h3>Loading product ...</h3>
+}
+else
+{
+    <ul class="list-unstyled">
+
+        <li class="media my-3">
+            <div class="media-img-wrapper my-2">
+                <a href="#">
+                    <img class="media-img" src="@_product.ImageUrl" alt="@_product.Title" />
+                </a>
+            </div>
+            <div class="media-body">
+                <a href="#">
+                    <h4 class="mb-0">@_product.Title</h4>
+                </a>
+                <p>@_product.Description</p>
+                <h5 class="price">$@_product.Price</h5>
+            </div>
+        </li>
+    </ul>
+}
+
+@code {
+    private Product _product;
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _product = _productService.Products.FirstOrDefault(x => x.Id == Id);
+    }
+
+}
