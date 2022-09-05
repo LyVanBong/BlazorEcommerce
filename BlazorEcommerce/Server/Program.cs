@@ -1,3 +1,6 @@
+using BlazorEcommerce.Server.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"));
+});
 
 var app = builder.Build();
 
