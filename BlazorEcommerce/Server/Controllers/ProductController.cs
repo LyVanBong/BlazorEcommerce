@@ -1,16 +1,14 @@
-﻿using BlazorEcommerce.Server.Data;
-
-namespace BlazorEcommerce.Server.Controllers
+﻿namespace BlazorEcommerce.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly DataContext _dataContext;
+        private readonly IProductService _productService;
 
-        public ProductController(DataContext dataContext)
+        public ProductController(IProductService productService)
         {
-            _dataContext = dataContext;
+            _productService = productService;
         }
 
         [HttpGet]
@@ -18,13 +16,12 @@ namespace BlazorEcommerce.Server.Controllers
         {
             try
             {
-                var data = _dataContext.Products.ToList();
+                var data = await _productService.GetProductAsync();
                 return Ok(data);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                return BadRequest(new MessageResponse<string>("error", false, "error"));
             }
         }
     }

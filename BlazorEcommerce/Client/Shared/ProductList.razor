@@ -1,35 +1,37 @@
-﻿@inject HttpClient _httpClient
+﻿@inject IProductService _productService
 
-<ul class="list-unstyled">
-    @foreach (Product product in _products)
-    {
-        <li class="media my-3">
-            <div class="media-img-wrapper my-2">
-                <a href="#">
-                    <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
-                </a>
-            </div>
-            <div class="media-body">
-                <a href="#">
-                    <h4 class="mb-0">@product.Title</h4>
-                </a>
-                <p>@product.Description</p>
-                <h5 class="price">$@product.Price</h5>
-            </div>
-        </li>
-    }
-</ul>
+@if (_productService.Products == null)
+{
+    <h3>Loadind data</h3>
+}
+else
+{
+    <ul class="list-unstyled">
+        @foreach (Product product in _productService.Products)
+        {
+            <li class="media my-3">
+                <div class="media-img-wrapper my-2">
+                    <a href="#">
+                        <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
+                    </a>
+                </div>
+                <div class="media-body">
+                    <a href="#">
+                        <h4 class="mb-0">@product.Title</h4>
+                    </a>
+                    <p>@product.Description</p>
+                    <h5 class="price">$@product.Price</h5>
+                </div>
+            </li>
+        }
+    </ul>
+}
+
 
 @code {
-    private List<Product> _products = new();
-
     protected override async Task OnInitializedAsync()
     {
-        var result = await _httpClient.GetFromJsonAsync<List<Product>>("api/Product");
-        if (result != null)
-        {
-            _products = result;
-        }
+        await _productService.GetProduct();
     }
 
 }
