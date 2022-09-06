@@ -22,7 +22,7 @@ else
                     <h4 class="mb-0">@_product.Title</h4>
                 </a>
                 <p>@_product.Description</p>
-                <h5 class="price">$@_product.Price</h5>
+                <h5 class="price">$@GetPrice(_product)</h5>
             </div>
         </li>
     </ul>
@@ -38,5 +38,9 @@ else
         var result = await _productService.GetProduct(Id);
         _product = result?.Data;
     }
-
+    private string GetPrice(Product product)
+    {
+        var price = product.ProductVariants.FirstOrDefault(p => p.ProductTypeId == product.ProductVariants[0].ProductTypeId).Price;
+        return price + "";
+    }
 }

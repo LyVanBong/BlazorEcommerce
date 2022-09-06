@@ -1,4 +1,5 @@
 ﻿@inject IProductService _productService
+@implements IDisposable
 
 
 <h3>Product List</h3>
@@ -13,16 +14,16 @@ else
         {
             <li class="media my-3">
                 <div class="media-img-wrapper my-2">
-                    <a href="/product/@product.Id">
+                    <a href="product/@product.Id">
                         <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
                     </a>
                 </div>
                 <div class="media-body">
-                    <a href="/product/@product.Id">
+                    <a href="product/@product.Id">
                         <h4 class="mb-0">@product.Title</h4>
                     </a>
                     <p>@product.Description</p>
-                    <h5 class="price">$@product.Price</h5>
+                    <h5 class="price">$@GetPrice(product)</h5>
                 </div>
             </li>
         }
@@ -31,9 +32,28 @@ else
 
 
 @code {
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await _productService.GetProducts();
+        _productService.ProductsChanged += StateHasChanged;
     }
 
+    public void Dispose()
+    {
+        _productService.ProductsChanged -= StateHasChanged;
+    }
+
+    private string GetPrice(Product product)
+    {
+        var variants = product.ProductVariants;
+        if (variants.Count == 0)
+        {
+            return string.Empty;
+        }
+        else if (variants.Count == 1)
+        {
+            return variants[0].Price + "";
+        }
+        decimal minPrice = variants.Min(p => p.Price);
+        return $"{minPrice}";
+    }
 }

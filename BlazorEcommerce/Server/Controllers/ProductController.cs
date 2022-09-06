@@ -11,6 +11,25 @@
             _productService = productService;
         }
 
+        [HttpGet("search-suggerstions/{searchText}")]
+        public async Task<IActionResult> GetProductSearchSuggestionsAsync(string searchText)
+        {
+            var data = await _productService.GetProductSearchSuggestionsAsync(searchText);
+            return Ok(data);
+        }
+        [HttpGet("search/{searchText}")]
+        public async Task<IActionResult> SearchProductsAsync(string searchText)
+        {
+            var data = await _productService.SearchProductsAsync(searchText);
+            return Ok(data);
+        }
+
+        [HttpGet("Category/{categoryUrl}")]
+        public async Task<IActionResult> GetProductsByCategory(string categoryUrl)
+        {
+            var data = await _productService.GetProductsByCategoryAsync(categoryUrl);
+            return Ok(data);
+        }
         [HttpGet("{productId}")]
         public async Task<IActionResult> GetProductAsync(int productId)
         {

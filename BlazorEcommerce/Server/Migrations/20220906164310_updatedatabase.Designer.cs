@@ -4,6 +4,7 @@ using BlazorEcommerce.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorEcommerce.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220906164310_updatedatabase")]
+    partial class updatedatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -252,7 +254,7 @@ namespace BlazorEcommerce.Server.Migrations
                         new
                         {
                             ProductId = 1,
-                            ProductTypeId = 1,
+                            ProductTypeId = 2,
                             OriginalPrice = 19.99m,
                             Price = 9.99m
                         },
@@ -260,50 +262,50 @@ namespace BlazorEcommerce.Server.Migrations
                         {
                             ProductId = 2,
                             ProductTypeId = 2,
-                            OriginalPrice = 89.99m,
-                            Price = 79.99m
+                            OriginalPrice = 19.99m,
+                            Price = 9.99m
                         },
                         new
                         {
                             ProductId = 3,
-                            ProductTypeId = 3,
-                            OriginalPrice = 79.99m,
-                            Price = 69.99m
+                            ProductTypeId = 2,
+                            OriginalPrice = 19.99m,
+                            Price = 9.99m
                         },
                         new
                         {
                             ProductId = 4,
-                            ProductTypeId = 4,
-                            OriginalPrice = 69.99m,
-                            Price = 59.99m
+                            ProductTypeId = 2,
+                            OriginalPrice = 19.99m,
+                            Price = 9.99m
                         },
                         new
                         {
                             ProductId = 5,
-                            ProductTypeId = 5,
-                            OriginalPrice = 59.99m,
-                            Price = 49.99m
+                            ProductTypeId = 2,
+                            OriginalPrice = 19.99m,
+                            Price = 9.99m
                         },
                         new
                         {
                             ProductId = 6,
-                            ProductTypeId = 6,
-                            OriginalPrice = 49.99m,
-                            Price = 39.99m
+                            ProductTypeId = 2,
+                            OriginalPrice = 19.99m,
+                            Price = 9.99m
                         },
                         new
                         {
                             ProductId = 7,
-                            ProductTypeId = 7,
-                            OriginalPrice = 39.99m,
-                            Price = 29.99m
+                            ProductTypeId = 2,
+                            OriginalPrice = 19.99m,
+                            Price = 9.99m
                         },
                         new
                         {
                             ProductId = 8,
-                            ProductTypeId = 8,
-                            OriginalPrice = 29.99m,
-                            Price = 19.99m
+                            ProductTypeId = 2,
+                            OriginalPrice = 19.99m,
+                            Price = 9.99m
                         });
                 });
 
