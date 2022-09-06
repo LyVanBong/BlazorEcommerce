@@ -1,5 +1,7 @@
 ﻿@inject IProductService _productService
 
+
+<h3>Product List</h3>
 @if (_productService.Products == null)
 {
     <h3>Loadind data</h3>
@@ -31,7 +33,7 @@ else
 @code {
     protected override async Task OnInitializedAsync()
     {
-        await _productService.GetProduct();
+        await _productService.GetProducts();
     }
 
 }

@@ -1,7 +1,7 @@
 ﻿@page "/product/{id:int}"
 @inject IProductService _productService
 
-<h3>ProductDetails</h3>
+<h3>Product Details</h3>
 
 @if (_product == null)
 {
@@ -35,7 +35,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _product = _productService.Products.FirstOrDefault(x => x.Id == Id);
+        var result = await _productService.GetProduct(Id);
+        _product = result?.Data;
     }
 
 }

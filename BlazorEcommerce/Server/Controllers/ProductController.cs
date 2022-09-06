@@ -11,12 +11,19 @@
             _productService = productService;
         }
 
+        [HttpGet("{productId}")]
+        public async Task<IActionResult> GetProductAsync(int productId)
+        {
+            var data = await _productService.GetProductAsync(productId);
+            return Ok(data);
+        }
+
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProductAsync()
+        public async Task<IActionResult> GetProductsAsync()
         {
             try
             {
-                var data = await _productService.GetProductAsync();
+                var data = await _productService.GetProducstAsync();
                 return Ok(data);
             }
             catch (Exception e)

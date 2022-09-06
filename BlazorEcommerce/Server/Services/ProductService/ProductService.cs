@@ -8,9 +8,15 @@ public class ProductService : IProductService
     {
         _dataContext = dataContext;
     }
-    public async Task<MessageResponse<List<Shared.Product>>> GetProductAsync()
+    public async Task<MessageResponse<List<Shared.Product>>> GetProducstAsync()
     {
         var data = await _dataContext.Products.ToListAsync();
-        return new MessageResponse<List<Shared.Product>>(data, true, "done");
+        return new MessageResponse<List<Product>>(data, true, "done");
+    }
+
+    public async Task<MessageResponse<Product>> GetProductAsync(int productId)
+    {
+        var data = await _dataContext.Products.FirstOrDefaultAsync(x => x.Id == productId);
+        return new MessageResponse<Product>(data, true, "done");
     }
 }

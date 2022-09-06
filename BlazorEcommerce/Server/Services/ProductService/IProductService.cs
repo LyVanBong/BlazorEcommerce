@@ -2,5 +2,6 @@
 
 public interface IProductService
 {
-    Task<MessageResponse<List<Shared.Product>>> GetProductAsync();
+    Task<MessageResponse<List<Product>>> GetProducstAsync();
+    Task<MessageResponse<Product>> GetProductAsync(int productId);
 }
