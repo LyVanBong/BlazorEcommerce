@@ -8,4 +8,7 @@ public interface IProductService
     List<Product> Products { get; set; }
     Task GetProducts(string? categoryUrl = null);
     Task<MessageResponse<Product>> GetProduct(int productId);
+    string Message { get; set; }
+    Task<List<string>> GetProductsSearchSuggestionAsync(string searchText);
+    Task SearchProductsAsync(string searchText);
 }

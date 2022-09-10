@@ -40,7 +40,7 @@ else
     }
     private string GetPrice(Product product)
     {
-        var price = product.ProductVariants.FirstOrDefault(p => p.ProductTypeId == product.ProductVariants[0].ProductTypeId).Price;
+        var price = product.ProductVariants?.FirstOrDefault(p => p.ProductTypeId == product.ProductVariants[0].ProductTypeId)?.Price;
         return price + "";
     }
 }

@@ -28,4 +28,29 @@ public class ProductService : IProductService
         var result = await _httpClient.GetFromJsonAsync<MessageResponse<Product>>($"api/Product/{productId}");
         return result;
     }
+
+    public string Message { get; set; }
+    public async Task<List<string>> GetProductsSearchSuggestionAsync(string searchText)
+    {
+        var result =
+            await _httpClient.GetFromJsonAsync<MessageResponse<List<string>>>(
+                $"api/Product/search-suggerstions/{searchText}");
+        return result?.Data;
+    }
+
+    public async Task SearchProductsAsync(string searchText)
+    {
+        var result =
+            await _httpClient.GetFromJsonAsync<MessageResponse<List<Product>>>($"api/Product/search/{searchText}");
+        if (result != null && result.Data != null)
+        {
+            Products = result.Data;
+        }
+
+        if (Products.Count == 0)
+        {
+            Message = "No products found.";
+        }
+        ProductsChanged.Invoke();
+    }
 }
