@@ -25,10 +25,10 @@ public class ProductService : IProductService
         return new MessageResponse<Product>(data, true, "done");
     }
 
-    public async Task<MessageResponse<List<Product>>> SearchProductsAsync(string searchText)
+    public async Task<MessageResponse<ProductSearchResult>> SearchProductsAsync(string searchText, int page)
     {
         var data = await FindProductsBySearchText(searchText);
-        return new MessageResponse<List<Product>>(data, true, "done");
+        return new MessageResponse<ProductSearchResult>(data, true, "done");
     }
 
     private async Task<List<Product>> FindProductsBySearchText(string searchText)
@@ -56,6 +56,12 @@ public class ProductService : IProductService
             .Where(x => x.Category.Url.ToUpper().Equals(categoryUrl.ToUpper()))
             .Include(p => p.ProductVariants)
             .ToListAsync();
+        return new MessageResponse<List<Product>>(data, true, "done");
+    }
+
+    public async Task<MessageResponse<List<Product>>> GetFeaturedProductsAsync()
+    {
+        var data = await _dataContext.Products.Where(p => p.Featured).Include(p => p.ProductVariants).ToListAsync();
         return new MessageResponse<List<Product>>(data, true, "done");
     }
 }
