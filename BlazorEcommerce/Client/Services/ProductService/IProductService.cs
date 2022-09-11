@@ -10,5 +10,8 @@ public interface IProductService
     Task<MessageResponse<Product>> GetProduct(int productId);
     string Message { get; set; }
     Task<List<string>> GetProductsSearchSuggestionAsync(string searchText);
-    Task SearchProductsAsync(string searchText);
+    Task SearchProductsAsync(string searchText, int page);
+    int CurrentPage { get; set; }
+    int PageCount { get; set; }
+    string LastSearchText { get; set; }
 }

@@ -22,10 +22,10 @@
             var data = await _productService.GetProductSearchSuggestionsAsync(searchText);
             return Ok(data);
         }
-        [HttpGet("search/{searchText}")]
-        public async Task<IActionResult> SearchProductsAsync(string searchText)
+        [HttpGet("search/{searchText}/{page}")]
+        public async Task<IActionResult> SearchProductsAsync(string searchText, int page = 1)
         {
-            var data = await _productService.SearchProductsAsync(searchText);
+            var data = await _productService.SearchProductsAsync(searchText, page);
             return Ok(data);
         }
 

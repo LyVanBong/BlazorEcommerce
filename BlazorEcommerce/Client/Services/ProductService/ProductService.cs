@@ -20,6 +20,13 @@ public class ProductService : IProductService
         {
             Products = result.Data;
         }
+
+        CurrentPage = 1;
+        PageCount = 0;
+        if (Products.Count == 0)
+        {
+            Message = "No products found";
+        }
         ProductsChanged.Invoke();
     }
 
@@ -38,13 +45,16 @@ public class ProductService : IProductService
         return result?.Data;
     }
 
-    public async Task SearchProductsAsync(string searchText)
+    public async Task SearchProductsAsync(string searchText, int page)
     {
+        LastSearchText = searchText;
         var result =
-            await _httpClient.GetFromJsonAsync<MessageResponse<List<Product>>>($"api/Product/search/{searchText}");
+            await _httpClient.GetFromJsonAsync<MessageResponse<ProductSearchResult>>($"api/Product/search/{searchText}/{page}");
         if (result != null && result.Data != null)
         {
-            Products = result.Data;
+            Products = result.Data.Products;
+            CurrentPage = result.Data.CurrentPage;
+            PageCount = result.Data.Pages;
         }
 
         if (Products.Count == 0)
@@ -53,4 +63,8 @@ public class ProductService : IProductService
         }
         ProductsChanged.Invoke();
     }
+
+    public int CurrentPage { get; set; }
+    public int PageCount { get; set; }
+    public string LastSearchText { get; set; }
 }

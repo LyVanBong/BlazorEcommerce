@@ -27,8 +27,23 @@ public class ProductService : IProductService
 
     public async Task<MessageResponse<ProductSearchResult>> SearchProductsAsync(string searchText, int page)
     {
+        var pageResults = 2f;
+        var pageCount = Math.Ceiling((await FindProductsBySearchText(searchText)).Count / pageResults);
+        var products = await _dataContext
+            .Products
+            .Where(p =>
+                p.Title.ToUpper().Contains(searchText.ToUpper()) ||
+                p.Description.ToUpper().Contains(searchText.ToUpper()))
+            .Include(p => p.ProductVariants).Skip((page - 1) * (int)pageResults).Take((int)pageResults).ToListAsync();
+
+
         var data = await FindProductsBySearchText(searchText);
-        return new MessageResponse<ProductSearchResult>(data, true, "done");
+        return new MessageResponse<ProductSearchResult>(new ProductSearchResult()
+        {
+            Products = products,
+            Pages = (int)pageCount,
+            CurrentPage = page
+        }, true, "done");
     }
 
     private async Task<List<Product>> FindProductsBySearchText(string searchText)
