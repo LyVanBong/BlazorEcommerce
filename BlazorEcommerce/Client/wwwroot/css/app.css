@@ -72,9 +72,9 @@ a, .btn-link {
     transition: transform .2s
 }
 
-.media-img:hover {
-    transform: scale(1.1);
-}
+    .media-img:hover {
+        transform: scale(1.1);
+    }
 
 .media {
     display: flex;

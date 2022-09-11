@@ -1,5 +1,5 @@
-﻿using System.Net.Http.Json;
-using BlazorEcommerce.Shared;
+﻿using BlazorEcommerce.Shared;
+using System.Net.Http.Json;
 
 namespace BlazorEcommerce.Client.Services.CategoryService;
 
@@ -12,6 +12,7 @@ public class CategoryService : ICategoryService
     {
         _httpClient = httpClient;
     }
+
     public async Task GetCategoriesAsync()
     {
         var data = await _httpClient.GetFromJsonAsync<MessageResponse<List<Category>>>("api/Category");

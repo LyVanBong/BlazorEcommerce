@@ -6,6 +6,7 @@ public class DataContext : DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<ProductType> ProductTypes { get; set; }
     public DbSet<ProductVariant> ProductVariants { get; set; }
+
     public DataContext(DbContextOptions<DataContext> option) : base(option)
     {
     }
@@ -199,10 +200,10 @@ public class DataContext : DbContext
                 ProductTypeId = 6,
                 Price = 39.99m,
                 OriginalPrice = 49.99m
-            }, 
+            },
             new ProductVariant()
             {
-                ProductId =7,
+                ProductId = 7,
                 ProductTypeId = 7,
                 Price = 29.99m,
                 OriginalPrice = 39.99m

@@ -6,6 +6,7 @@ namespace BlazorEcommerce.Client.Services.ProductService;
 public class ProductService : IProductService
 {
     public event Action? ProductsChanged;
+
     public List<Product> Products { get; set; }
     private HttpClient _httpClient;
 
@@ -13,6 +14,7 @@ public class ProductService : IProductService
     {
         _httpClient = httpClient;
     }
+
     public async Task GetProducts(string? categoryUrl = null)
     {
         var result = categoryUrl == null ? await _httpClient.GetFromJsonAsync<MessageResponse<List<Product>>>("api/Product/featured") : await _httpClient.GetFromJsonAsync<MessageResponse<List<Product>>>($"api/Product/Category/{categoryUrl}");
@@ -37,6 +39,7 @@ public class ProductService : IProductService
     }
 
     public string Message { get; set; }
+
     public async Task<List<string>> GetProductsSearchSuggestionAsync(string searchText)
     {
         var result =

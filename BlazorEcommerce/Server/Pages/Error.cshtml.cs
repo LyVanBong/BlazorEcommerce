@@ -1,4 +1,4 @@
-﻿ namespace BlazorEcommerce.Server.Pages
+﻿namespace BlazorEcommerce.Server.Pages
 {
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     [IgnoreAntiforgeryToken]

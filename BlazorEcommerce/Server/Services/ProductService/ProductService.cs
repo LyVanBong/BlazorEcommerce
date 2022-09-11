@@ -8,6 +8,7 @@ public class ProductService : IProductService
     {
         _dataContext = dataContext;
     }
+
     public async Task<MessageResponse<List<Product>>> GetProducstAsync()
     {
         var data = await _dataContext.Products
@@ -35,7 +36,6 @@ public class ProductService : IProductService
                 p.Title.ToUpper().Contains(searchText.ToUpper()) ||
                 p.Description.ToUpper().Contains(searchText.ToUpper()))
             .Include(p => p.ProductVariants).Skip((page - 1) * (int)pageResults).Take((int)pageResults).ToListAsync();
-
 
         var data = await FindProductsBySearchText(searchText);
         return new MessageResponse<ProductSearchResult>(new ProductSearchResult()

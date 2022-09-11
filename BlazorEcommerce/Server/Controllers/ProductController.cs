@@ -10,18 +10,21 @@
         {
             _productService = productService;
         }
+
         [HttpGet("featured")]
         public async Task<IActionResult> GetFeaturedProductsAsync()
         {
             var data = await _productService.GetFeaturedProductsAsync();
             return Ok(data);
         }
+
         [HttpGet("search-suggerstions/{searchText}")]
         public async Task<IActionResult> GetProductSearchSuggestionsAsync(string searchText)
         {
             var data = await _productService.GetProductSearchSuggestionsAsync(searchText);
             return Ok(data);
         }
+
         [HttpGet("search/{searchText}/{page}")]
         public async Task<IActionResult> SearchProductsAsync(string searchText, int page = 1)
         {
@@ -35,6 +38,7 @@
             var data = await _productService.GetProductsByCategoryAsync(categoryUrl);
             return Ok(data);
         }
+
         [HttpGet("{productId}")]
         public async Task<IActionResult> GetProductAsync(int productId)
         {
