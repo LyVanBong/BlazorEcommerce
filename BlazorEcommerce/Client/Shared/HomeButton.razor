@@ -1,6 +1,6 @@
 ﻿@inject NavigationManager NavigationManager
 
-<button class="btn btn-outline-primary home-button">
+<button class="btn btn-outline-primary home-button" @onclick="() => GoHome()">
     My Shop
 </button>
 
@@ -8,6 +8,6 @@
 
     private void GoHome()
     {
-        NavigationManager.NavigateTo("/ ");
-     }
+        NavigationManager.NavigateTo("");
+    }
 }

@@ -34,7 +34,7 @@ else
         }
         <div class="container">
             <div class="cart-product-price">
-                Total (@_cartProductResponses.Count): $@_cartProductResponses.Sum(p=>p.Price)
+                Total (@_cartProductResponses.Count): $@_cartProductResponses.Sum(p=> ( p.Price * p.Quantity))
             </div>
         </div>
     </div>

@@ -1,0 +1,59 @@
+﻿@page "/login"
+@using BlazorEcommerce.Client.Services.AuthService
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.WebUtilities
+@inject IAuthService AuthService
+@inject ILocalStorageService LocalStorageService
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Login</PageTitle>
+<h3>Login</h3>
+
+<EditForm Model="@_userLogin" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="email">Email</label>
+        <InputText id="email" @bind-Value="_userLogin.Email" class="form-control"></InputText>
+        <ValidationMessage For="@(() => _userLogin.Email)" />
+    </div>
+    <div class="mb-3">
+        <label for="passwd">Password</label>
+        <InputText id="passwd" @bind-Value="_userLogin.Password" class="form-control" type="password"></InputText>
+        <ValidationMessage For="@(() => _userLogin.Password)" />
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</EditForm>
+
+<div class="text-danger">
+    <span>@_message</span>
+</div>
+
+@code {
+    private UserLogin _userLogin = new UserLogin();
+    private string _message = string.Empty;
+    private string _returnUrl = string.Empty;
+    protected override void OnInitialized()
+    {
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url))
+        {
+            _returnUrl = url;
+        }
+    }
+
+    private async Task HandleLogin()
+    {
+        var result = await AuthService.Login(_userLogin);
+        _message = result?.Message;
+        if (result.Success)
+        {
+            await LocalStorageService.SetItemAsync("authToken", result.Data);
+
+            await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+            NavigationManager.NavigateTo(_returnUrl);
+        }
+    }
+}
