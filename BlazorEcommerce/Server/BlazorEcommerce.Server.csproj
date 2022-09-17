@@ -20,6 +20,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Stripe.net" Version="40.8.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
@@ -33,6 +34,7 @@
     <Folder Include="Services\CategoryService\" />
     <Folder Include="Services\CartService\" />
     <Folder Include="Services\AuthService\" />
+    <Folder Include="Services\PaymentService\" />
     <Folder Include="Services\ProductService\" />
   </ItemGroup>
 

@@ -1,8 +1,10 @@
 ﻿@using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Components.Authorization
+@using BlazorEcommerce.Client.Services.CartService
 @inject ILocalStorageService LocalStorageService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
+@inject ICartService CartService
 
 <div class="dropdown">
     <button @onclick="ToggleUserMenu" @onfocusout="HideUserMenu" class="btn btn-secondary dropdown-toggle user-button">
@@ -49,6 +51,7 @@
     private async Task Logout()
     {
         await LocalStorageService.RemoveItemAsync("authToken");
+        await CartService.GetCartItemsCountAsync();
         await AuthenticationStateProvider.GetAuthenticationStateAsync();
         NavigationManager.NavigateTo("");
     }

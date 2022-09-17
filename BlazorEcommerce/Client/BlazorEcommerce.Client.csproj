@@ -21,6 +21,7 @@
   <ItemGroup>
     <Folder Include="Services\CartService\" />
     <Folder Include="Services\AuthService\" />
+    <Folder Include="Services\OrderService\" />
   </ItemGroup>
 
 </Project>

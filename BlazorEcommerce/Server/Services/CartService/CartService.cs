@@ -1,14 +1,20 @@
-﻿namespace BlazorEcommerce.Server.Services.CartService;
+﻿using System.Security.Claims;
+
+namespace BlazorEcommerce.Server.Services.CartService;
 
 public class CartService : ICartService
 {
     private readonly DataContext _dataContext;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public CartService(DataContext dataContext)
+    public CartService(DataContext dataContext, IHttpContextAccessor httpContextAccessor)
     {
         _dataContext = dataContext;
+        _httpContextAccessor = httpContextAccessor;
     }
 
+    private int GetUserId() =>
+        int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
     public async Task<MessageResponse<List<CartProductResponse>>> GetCartProductsAsync(List<CartItem> cartItems)
     {
         var result = new MessageResponse<List<CartProductResponse>>(new List<CartProductResponse>(), true, "Done");
@@ -44,11 +50,23 @@ public class CartService : ICartService
         return result;
     }
 
-    public async Task<MessageResponse<List<CartProductResponse>>> StoreCartItemsAsync(List<CartItem> cartItems, int userId)
+    public async Task<MessageResponse<List<CartProductResponse>>> StoreCartItemsAsync(List<CartItem> cartItems)
     {
-        cartItems.ForEach(cartItem => cartItem.UserId = userId);
+        cartItems.ForEach(cartItem => cartItem.UserId = GetUserId());
         _dataContext.CartItems.AddRange(cartItems);
         await _dataContext.SaveChangesAsync();
-        return await GetCartProductsAsync(await _dataContext.CartItems.Where(p => p.UserId == userId).ToListAsync());
+        return await GetDbCartProductsAsync();
+    }
+
+    public async Task<MessageResponse<int>> GetCartItemsCountAsync()
+    {
+        var count = (await _dataContext.CartItems.Where(p => p.UserId == GetUserId()).ToListAsync()).Count;
+        return new MessageResponse<int>(count, true, "done");
+    }
+
+    public async Task<MessageResponse<List<CartProductResponse>>> GetDbCartProductsAsync()
+    {
+        return await GetCartProductsAsync(
+            await _dataContext.CartItems.Where(p => p.UserId == GetUserId()).ToListAsync());
     }
 }

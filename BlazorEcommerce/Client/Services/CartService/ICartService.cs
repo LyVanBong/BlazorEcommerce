@@ -8,12 +8,11 @@ public interface ICartService
 
     Task AddToCart(CartItem cartItem);
 
-    Task<List<CartItem>> GetCartItems();
-
     Task<List<CartProductResponse>> GetCartProductsAsync();
 
     Task RemoveProductFromCart(int productId, int productTypeId);
 
     Task UpdateQuantityAsync(CartProductResponse cartProductResponse);
     Task StoreCartItemsAsync(bool emptyLocalCart);
+    Task GetCartItemsCountAsync(); 
 }

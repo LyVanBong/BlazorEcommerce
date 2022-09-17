@@ -4,6 +4,7 @@ using BlazorEcommerce.Server.Services.CategoryService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BlazorEcommerce.Server.Services.PaymentService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateAudience = false,
     };
 });
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
